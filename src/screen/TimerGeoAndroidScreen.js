@@ -98,7 +98,7 @@ const TimerGeoScreen = () => {
 
       watchIdRef.current = Geolocation.watchPosition(
         position => {
-          console.log("📍 Location update received:", position);
+          console.log("📍 Location update received:", position.coords);
 
           const { latitude, longitude } = position.coords;
           setLocation({ latitude, longitude });
@@ -128,7 +128,9 @@ const TimerGeoScreen = () => {
           enableHighAccuracy: true,
           distanceFilter: 5,
           interval: 5000,
-          fastestInterval: 2000
+          fastestInterval: 2000,
+          forceRequestLocation: true,
+          showLocationDialog: true,
         }
       );
     })();

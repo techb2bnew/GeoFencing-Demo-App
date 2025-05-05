@@ -2,36 +2,36 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Platform } from 'react-native';
 import TimerGeoScreen from './src/screen/TimerGeoScreen';
 import TimerGeoAndroidScreen from './src/screen/TimerGeoAndroidScreen';
-// import messaging from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 
 
 
 const App = () => {
-  // useEffect(() => {
-  //   requestUserPermission();
-  //   getFCMToken();
-  // }, []);
+  
+  useEffect(() => {
+    requestUserPermission();
+    getFCMToken();
+  }, []);
 
-
-
-  // // 🔔 Ask notification permission
-  // const requestUserPermission = async () => {
-  //   const authStatus = await messaging().requestPermission();
-  //   const enabled =
-  //     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-  //     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-  //   if (enabled) {
-  //     console.log('Notification permission status:', authStatus);
-  //   }
-  // };
+  // 🔔 Ask notification permission
+  const requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+      
+    if (enabled) {
+      console.log('Notification permission status:', authStatus);
+    }
+  };
 
   // 🔐 Get FCM Token
   const getFCMToken = async () => {
     try {
+      await messaging().registerDeviceForRemoteMessages();
+
       const token = await messaging().getToken();
       console.log('FCM Token:', token);
-      // Optionally save it in AsyncStorage
     } catch (error) {
       console.log('Error getting FCM token:', error);
     }
